@@ -47,14 +47,14 @@ public class Address {
                phoneNumber = true;
            }
         }
-        if(phoneNumber){fName || lName || phoneNumber){
+        if(fName || lName || phoneNumber){
             return true;
         }
         return false;
     }
 
     public int compareTo(Address a){
-        return (phoneNumber.compareTo(a.getPhone_number()));
+        return (first_name.compareTo(a.getFirst_name()));
     }
 
     Address(String first_name, String last_name){
