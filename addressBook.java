@@ -12,8 +12,9 @@ public class addressBook {
         Address the = new Address("the", "hell", 415);
         Address he = new Address("the", "big", 654);
 
-        addressList.add(he);
         addressList.add(the);
+        addressList.add(he);
+
         int index;
         int action = 0;
         System.out.println(addressList.size());
@@ -48,16 +49,13 @@ public class addressBook {
                     }
                     break;
                 case 4:
-
                     search(2);
                     break;
                 case 5:
                     System.out.println("Loading");
                     break;
                 case 6:
-                    for (Address a : addressList) {
-                        System.out.println(a);
-                    }
+                    print();
                     break;
             }
         } while (action != 5) ;
@@ -94,6 +92,7 @@ public class addressBook {
         } catch (InputMismatchException e) {
             System.out.println("Please enter an appropriate response to the prompts");
         }
+        System.out.println(addressList.get(index));
     }
 
     private static void addingAddress() {
@@ -121,41 +120,46 @@ public class addressBook {
         ArrayList<Integer> found = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         if(!addressList.isEmpty()) {
+            //User Input  used to search for an Address
             System.out.println("What address are you looking for? \n You can search by first name, last name or phone number");
-
             if (sc.hasNextInt()) {
                 pNumber = sc.nextInt();
                 a = new Address("n", "n",pNumber);
-
             } else if (sc.hasNext()) {
                 name = sc.next();
                 a = new Address(name, name);
             }
+            //loop used to travers the address and find any address's that apply to the search
             for (int i = 0; i < addressList.size(); i++) {
                 assert a != null;
                 if (a.equals(addressList.get(i))) {
                     found.add(i);
-                    index++;
-                    if (type == 2) {
-                        System.out.println(addressList.get(i));
+                    System.out.println(addressList.get(i));
                     }
                 }
             }
-           if (type != 2 && (found.size() >= 2)) {
-                for (Integer integer : found) {
-                    System.out.println(addressList.get(integer));
-                }
+        //determines whether there are any address that were added to the found array
+        if(found.size() == 0) {
+            System.out.println("There is not contact by that name or number");
+        }else if (type != 2 && (found.size() > 1)) {
                 System.out.println("There are multiple contacts. Please use another attribute of the address?");
                 index = search(type);
+            } else {
+                index = found.get(0);
             }
+        return index;
+        }
 
-            if (index == -1) {
-                System.out.println("There is not contact by that name or number");
+        public static void print(){
+            for (Address a : addressList) {
+                System.out.println(a);
             }
         }
-        return index;
+
     }
-}
+
+
+
 
 
 
