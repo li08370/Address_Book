@@ -10,9 +10,9 @@ public class addressBook {
 
 
     public static void main(String[] args) {
-        Address big = new Address("the", "three", 765);
-        Address the = new Address("the", "hell", 415);
-        Address he = new Address("binge", "big", 654);
+        Address big = new Address("c", "three", 765);
+        Address the = new Address("b", "hell", 415);
+        Address he = new Address("a", "big", 654);
 
         addressList.add(big);//index = 0
         addressList.add(the);
@@ -61,10 +61,9 @@ public class addressBook {
                 case 6:
                    System.out.println("Loading");
                     break;
-
             }
-        } while (action != 5) ;
             addressList.sort(Address::compareTo);
+        } while (action != 5) ;
             for (Address a : addressList) {
                 System.out.println(a);
             }
@@ -98,6 +97,7 @@ public class addressBook {
             System.out.println("Please enter an appropriate response to the prompts");
         }
         System.out.println(addressList.get(index));
+        addressList.sort(Address::compareTo);
     }
 
     private static void addingAddress() {
@@ -165,6 +165,7 @@ public class addressBook {
         }
 
         public static void print(){
+            addressList.sort(Address::compareTo);
             for (Address a : addressList) {
                 System.out.println(a);
             }
