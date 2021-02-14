@@ -8,10 +8,13 @@ import java.util.Scanner;
 public class addressBook {
     private static ArrayList<Address> addressList = new ArrayList<>();
 
-    public static void main(String[] args) {
-        Address the = new Address("the", "hell", 415);
-        Address he = new Address("the", "big", 654);
 
+    public static void main(String[] args) {
+        Address big = new Address("the", "three", 765);
+        Address the = new Address("the", "hell", 415);
+        Address he = new Address("binge", "big", 654);
+
+        addressList.add(big);//index = 0
         addressList.add(the);
         addressList.add(he);
 
@@ -27,7 +30,8 @@ public class addressBook {
                          2) update existing contact\s
                          3) delete a contact\s
                          4) search\s
-                         5) quit""");
+                         5) print all\s
+                         6) quit""");
                 action = input.nextInt();
             } catch (InputMismatchException exp) {
                 System.out.println("Please enter an action listed by the number");
@@ -37,26 +41,27 @@ public class addressBook {
                     addingAddress();
                     break;
                 case 2:
-                    index = search(0);
+                    index = search(0, false);
                     if (index != -1) {
                         update(index);
                     }
                     break;
                 case 3:
-                    index = search(1);
+                    index = search(1, false);
                     if (index != -1) {
                         addressList.remove(index);
                     }
                     break;
                 case 4:
-                    search(2);
+                    search(2, false);
                     break;
                 case 5:
-                    System.out.println("Loading");
-                    break;
-                case 6:
                     print();
                     break;
+                case 6:
+                   System.out.println("Loading");
+                    break;
+
             }
         } while (action != 5) ;
             addressList.sort(Address::compareTo);
@@ -112,11 +117,11 @@ public class addressBook {
         addressList.add(a);
     }
 
-    private static int search(int type) {
+    private static int search(int type, boolean sName) {
         int pNumber;
         String name;
-        Address a = null;
         int index = -1;
+        Address a = null;
         ArrayList<Integer> found = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         if(!addressList.isEmpty()) {
@@ -124,7 +129,8 @@ public class addressBook {
             System.out.println("What address are you looking for? \n You can search by first name, last name or phone number");
             if (sc.hasNextInt()) {
                 pNumber = sc.nextInt();
-                a = new Address("n", "n",pNumber);
+                a = new Address("n","n", pNumber);
+
             } else if (sc.hasNext()) {
                 name = sc.next();
                 a = new Address(name, name);
@@ -132,18 +138,26 @@ public class addressBook {
             //loop used to travers the address and find any address's that apply to the search
             for (int i = 0; i < addressList.size(); i++) {
                 assert a != null;
-                if (a.equals(addressList.get(i))) {
-                    found.add(i);
-                    System.out.println(addressList.get(i));
+
+                if (sName == false) {
+                    if (addressList.get(i).equals(a)) {
+                        found.add(i);
+                        System.out.println(addressList.get(i));
+                    }
+                } else {
+                    if (addressList.get(i).equal(a)){
+                        found.add(i);
+                        System.out.println(addressList.get(i));
                     }
                 }
             }
+        }
         //determines whether there are any address that were added to the found array
         if(found.size() == 0) {
             System.out.println("There is not contact by that name or number");
         }else if (type != 2 && (found.size() > 1)) {
                 System.out.println("There are multiple contacts. Please use another attribute of the address?");
-                index = search(type);
+                index = search(type, true);
             } else {
                 index = found.get(0);
             }
