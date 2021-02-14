@@ -1,7 +1,7 @@
 public class Address {
     String first_name, last_name;
     int phone_number = -1;
-    boolean fName, lName, phoneNumber;
+    boolean fName = false, lName = false, phoneNumber = false;
 
     public String getFirst_name() {
         return first_name;
@@ -37,20 +37,30 @@ public class Address {
     public boolean equals(Object obj){
         if(obj instanceof Address){
            Address otherAddress = (Address) obj;
-          /* if(this.getFirst_name().equalsIgnoreCase(otherAddress.getFirst_name())){
+          if(this.getFirst_name().equalsIgnoreCase(otherAddress.getFirst_name())){
                fName = true;
            }
            if (this.getLast_name().equalsIgnoreCase(otherAddress.getLast_name())){
                lName = true;
-           }*/
+           }
            if(this.getPhone_number() == otherAddress.getPhone_number()){
                phoneNumber = true;
            }
         }
-        if(fName || lName || phoneNumber){
-            return true;
+        return fName || lName || phoneNumber;
+    }
+
+    public boolean equal(Object obj){
+        if(obj instanceof Address){
+            Address otherAddress = (Address) obj;
+            if (this.getLast_name().equalsIgnoreCase(otherAddress.getLast_name())){
+                lName = true;
+            }
+            if(this.getPhone_number() == otherAddress.getPhone_number()){
+                phoneNumber = true;
+            }
         }
-        return false;
+        return lName || phoneNumber;
     }
 
     public int compareTo(Address a){
